@@ -11,6 +11,7 @@ use App\Services\Cache\RedisAdapter;
 class LibraryController extends Controller
 {
     protected $client;
+    
     protected $cache;
 
     public function __construct(Guzzle $client, RedisAdapter $cache)
