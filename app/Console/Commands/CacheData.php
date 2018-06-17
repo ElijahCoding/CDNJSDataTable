@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Services\LibrariesService;
 use Illuminate\Console\Command;
+use GuzzleHttp\Client as Guzzle;
 use App\Services\Cache\RedisAdapter;
 
 class CacheData extends Command
@@ -29,10 +31,13 @@ class CacheData extends Command
 
     protected $cache;
 
-    public function __construct(RedisAdapter $cache)
+    protected $client;
+
+    public function __construct(RedisAdapter $cache, Guzzle $client)
     {
         parent::__construct();
         $this->cache = $cache;
+        $this->client = $client;
     }
 
     /**
@@ -42,6 +47,8 @@ class CacheData extends Command
      */
     public function handle()
     {
+      $this->cache->forgetAll();
+
       $data = $this->cache->remember('libraries', 20, function () {
         return json_encode((new LibrariesService($this->client))->get());
       });

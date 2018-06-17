@@ -33,4 +33,8 @@ class RedisAdapter
     return $value;
   }
 
+  public function forgetAll()
+  {
+    $this->client->flushAll();
+  }
 }
