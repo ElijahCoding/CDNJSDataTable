@@ -6,7 +6,13 @@
                     <div class="card-header">Example Component</div>
 
                     <div class="card-body">
-                        I'm an example component.
+
+                      <div class="table-responsive">
+                        <table class="table table-stripe">
+                          
+                        </table>
+                      </div>
+
                     </div>
                 </div>
             </div>
@@ -16,8 +22,18 @@
 
 <script>
     export default {
+        props: [
+          'endpoint'
+        ],
+
+        data () {
+          return {
+
+          }
+        },
+
         mounted() {
-            console.log('Component mounted.')
+            console.log(this.endpoint)
         }
     }
 </script>

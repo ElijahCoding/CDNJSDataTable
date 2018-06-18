@@ -11,7 +11,7 @@ use App\Services\Cache\RedisAdapter;
 class LibraryController extends Controller
 {
     protected $client;
-    
+
     protected $cache;
 
     public function __construct(Guzzle $client, RedisAdapter $cache)
@@ -22,11 +22,6 @@ class LibraryController extends Controller
 
     public function index()
     {
-      $data = $this->cache->remember('libraries', 20, function () {
-        return json_encode((new LibrariesService($this->client))->get());
-      });
-
-      return json_decode($data);
-
+      return (new LibrariesService($this->client, $this->cache))->get();
     }
 }
